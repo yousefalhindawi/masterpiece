@@ -34,6 +34,46 @@ Route::get('/about', function () {
 Route::get('/contact', function () {
     return view('contact');
 });
-Route::get('//profile', function () {
-    return view('/profile');
+Route::get('/profile', function () {
+    return view('profile');
 });
+Route::get('/login', function () {
+    return view('login');
+});
+Route::get('/register', function () {
+    return view('register');
+});
+
+
+//dashboard routes
+Route::get('admin', function () {
+    return view('admin.index');
+})->name('admin');
+
+Route::get('admin/users', function () {
+    return view('admin.users');
+})->name('admin/users');
+
+//start admins routes
+Route::get('admin/admins', function () {
+    return view('admin.admins.index');
+})->name('admin/admins');
+
+Route::get('/admin/edit', function () {
+    return view('admin.admins.edit');
+});
+Route::get('/admin/create', function () {
+    return view('admin.admins.create');
+});
+
+Route::get('admin/addquiz', function () {
+    return view('admin.add_quiz');
+})->name('admin/add_quiz');
+
+Route::get('admin/addqustions', function () {
+    return view('admin.add_qustions');
+})->name('admin/add_qustions');
+
+Route::get('admin/qustions', function () {
+    return view('admin.qustions');
+})->name('admin/add_interview_qustions');

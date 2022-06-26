@@ -1,5 +1,5 @@
 @extends('./layouts.master')
-
+@section('title', 'Contact')
 @section('content')
 
 <div class="hero-wrap hero-bread" style="background-image: url('images/bg_1.jpg');">
@@ -79,6 +79,6 @@
     }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU&callback=sample"></script> --}}
-    
+
 @endsection
 

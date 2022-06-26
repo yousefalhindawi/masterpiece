@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-    <title>Vegefoods - Free Bootstrap 4 Template by Colorlib</title>
+    <title>@yield('title')</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link rel="icon" href='{{ asset('images/bg_2.jpg') }}' type="image/png" />
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
@@ -33,6 +33,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+        <style>
+            .nav-link{
+                font-size: 1em !important;
+            }
+          .nav-item .active{
+               color:#82ae46 !important;
+
+           }
+        </style>
 </head>
 
 <body class="goto-here">
@@ -69,9 +80,9 @@
 
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a href="/" class="nav-link">Home</a></li>
+                    <li class="nav-item" ><a href="/" class="nav-link {{Request::is('/') ? 'active' : ''}}">Home</a></li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown"
+                        <a class="nav-link dropdown-toggle " href="#" id="dropdown04" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">Shop</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown04">
                             <a class="dropdown-item" href="/shop">Shop</a>
@@ -81,16 +92,19 @@
                             <a class="dropdown-item" href="/checkout">Checkout</a>
                         </div>
                     </li>
-                    <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+                    <li class="nav-item "><a href="/about" class="nav-link {{Request::is('about') ? 'active' : ''}}">About</a></li>
                     {{-- <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li> --}}
-                    <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+                    <li class="nav-item "><a href="/contact" class="nav-link {{Request::is('contact') ? 'active' : ''}}">Contact</a></li>
                     <li class="nav-item cta cta-colored"><a href="/cart" class="nav-link"><span
                                 class="icon-shopping_cart"></span>[0]</a></li>
-                    <li class="nav-item" style="margin-top:20px ; margin-left:10px">
-                        <a href="/profile" class="icons">
+                    <li class="nav-item" >
+                        <a href="/profile" class="icons nav-link {{Request::is('profile') ? 'active' : ''}}">
                             <i class="fa-solid fa-user" style="font-size:1.2em"></i>
                         </a>
                     </li>
+                    <li class="nav-item "><a href="/login" class="nav-link {{Request::is('login') ? 'active' : ''}}">Login</a></li>
+                    <li class="nav-item"><a href="/register" class="nav-link {{Request::is('register') ? 'active' : ''}}">Register</a></li>
+                    <li class="nav-item"><a href="/admin" class="nav-link {{Request::is('admin') ? 'active' : ''}}">Admin</a></li>
                 </ul>
             </div>
         </div>

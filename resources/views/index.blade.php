@@ -1,6 +1,7 @@
 @extends('./layouts.master')
-
+@section('title', 'Home')
 @section('content')
+
 
 <section id="home-section" class="hero">
     <div class="home-slider owl-carousel">

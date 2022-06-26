@@ -1,5 +1,5 @@
 @extends('./layouts.master')
-
+@section('title', 'Checkout')
 @section('content')
 
 <div class="hero-wrap hero-bread" style="background-image: url('images/bg_1.jpg');">
