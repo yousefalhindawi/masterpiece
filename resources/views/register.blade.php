@@ -141,16 +141,16 @@
               class="img-fluid" alt="Sample image">
           </div> --}}
           <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 my-5">
-            <form method="POST" action=''>
+            <form method="POST" action='{{ route('users.store') }}'>
               @method('POST')
               @csrf
               <!-- Username input -->
               <div class="form-outline mb-4">
                   <label class="form-label" for="form3Example1">Username</label>
-                <input type="email" name='name' value='{{ old('email') }}' id="form3Example1" class="form-control form-control-lg"
-                  placeholder="Enter a valid username" />
+                <input type="text" name='name' value='{{ old('name') }}' id="form3Example1" class="form-control form-control-lg"
+                  placeholder="Enter a valid username" autofocus />
                 @error('name')
-                <div class="text-danger fw-bolder"></div>
+                <div class="text-danger fw-bolder">{{ $message }}</div>
                 @enderror
               </div>
               <!-- Email input -->
@@ -159,16 +159,25 @@
                 <input type="email" name='email' value='{{ old('email') }}' id="form3Example2" class="form-control form-control-lg"
                   placeholder="example@gmail.com" />
                 @error('email')
-                <div class="text-danger fw-bolder"></div>
+                <div class="text-danger fw-bolder">{{ $message }}</div>
                 @enderror
               </div>
               <!-- Phone input -->
               <div class="form-outline mb-4">
                   <label class="form-label" for="form3Example3">Phone</label>
-                <input type="email" name='phone' value='{{ old('email') }}' id="form3Example3" class="form-control form-control-lg"
+                <input type="text" name='phone' value='{{ old('phone') }}' id="form3Example3" class="form-control form-control-lg"
                   placeholder="07xxxxxxxx" />
                 @error('phone')
-                <div class="text-danger fw-bolder"></div>
+                <div class="text-danger fw-bolder">{{ $message }}</div>
+                @enderror
+              </div>
+              <!-- Address input -->
+              <div class="form-outline mb-4">
+                  <label class="form-label" for="form3Example6">Address</label>
+                <input type="text" name='address' value='{{ old('address') }}' id="form3Example6" class="form-control form-control-lg"
+                  placeholder="Address" />
+                @error('address')
+                <div class="text-danger fw-bolder">{{ $message }}</div>
                 @enderror
               </div>
 
@@ -179,16 +188,16 @@
                 <input type="password" name='password' id="form3Example4" class="form-control form-control-lg"
                   placeholder="Enter password" />
                   @error('password')
-                  <div class="text-danger fw-bolder"></div>
+                  <div class="text-danger fw-bolder">{{ $message }}</div>
               @enderror
               </div>
               <!-- Repeat Password input -->
               <div class="form-outline mb-3">
                   <label class="form-label" for="form3Example5">Repeat Password</label>
-                <input type="password" name='password' id="form3Example5" class="form-control form-control-lg"
+                <input type="password" name='password_confirmation' id="form3Example5" class="form-control form-control-lg"
                   placeholder="Enter password" />
-                  @error('password')
-                  <div class="text-danger fw-bolder"></div>
+                  @error('password_confirmation')
+                  <div class="text-danger fw-bolder">{{ $message }}</div>
               @enderror
               </div>
 
@@ -207,7 +216,7 @@
               <div class="text-center text-lg-start mt-4 pt-2">
                 <button type="submit" class="btn btn-primary btn-lg"
                   style="padding-left: 2.5rem; padding-right: 2.5rem;">Register</button>
-                <p class="fw-bold mt-2 pt-1 mb-0">Already have an account? <a href="/login"
+                <p class="fw-bold mt-2 pt-1 mb-0">Already have an account? <a href="{{ route('login') }}"
                     class="link-danger">Login</a></p>
               </div>
 

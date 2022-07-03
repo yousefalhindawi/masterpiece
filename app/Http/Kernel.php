@@ -44,6 +44,13 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+        'admin'=>[
+            \App\Http\Middleware\adminDashbord::class,
+        ],
+        'user'=>[
+            \App\Http\Middleware\UserAuth::class,
+        ],
+
     ];
 
     /**
@@ -63,5 +70,7 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'profile' => \App\Http\Middleware\ProfileAuth::class,
+
     ];
 }

@@ -10,40 +10,45 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
+    {{-- <script src="//unpkg.com/alpinejs" defer></script> --}}
 
-    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="{{ url('css/open-iconic-bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url('css/animate.css') }}">
 
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="{{ url('css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ url('css/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="{{ url('css/magnific-popup.css') }}">
 
-    <link rel="stylesheet" href="css/aos.css">
+    <link rel="stylesheet" href="{{ url('css/aos.css') }}">
 
-    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link rel="stylesheet" href="{{ url('css/ionicons.min.css') }}">
 
-    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="css/jquery.timepicker.css">
+    <link rel="stylesheet" href="{{ url('css/bootstrap-datepicker.css') }}">
+    <link rel="stylesheet" href="{{ url('css/jquery.timepicker.css') }}">
 
 
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/icomoon.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ url('css/flaticon.css') }}">
+    <link rel="stylesheet" href="{{ url('css/icomoon.css') }}">
+    <link rel="stylesheet" href="{{ url('css/style.css') }}">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
-        <style>
-            .nav-link{
-                font-size: 1em !important;
-            }
-          .nav-item .active{
-               color:#82ae46 !important;
 
-           }
-        </style>
+
+
+    <style>
+        .nav-link {
+            font-size: 1em !important;
+        }
+
+        .nav-item .active {
+            color: #82ae46 !important;
+
+        }
+    </style>
 </head>
 
 <body class="goto-here">
@@ -72,7 +77,7 @@
     </div>
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
-            <a class="navbar-brand" href="/">Vegefoods</a>
+            <a class="navbar-brand" href="{{ route('home') }}">Vegefoods</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
                 aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="oi oi-menu"></span> Menu
@@ -80,31 +85,52 @@
 
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item" ><a href="/" class="nav-link {{Request::is('/') ? 'active' : ''}}">Home</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle " href="#" id="dropdown04" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">Shop</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown04">
-                            <a class="dropdown-item" href="/shop">Shop</a>
-                            {{-- <a class="dropdown-item" href="wishlist.html">Wishlist</a> --}}
-                            <a class="dropdown-item" href="/product-single">Single Product</a>
-                            <a class="dropdown-item" href="/cart">Cart</a>
+                    <li class="nav-item"><a href="/"
+                            class="nav-link {{ Request::is('/') ? 'active' : '' }}">Home</a></li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle " href="#" id="dropdown04" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">Shop</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown04">
+                                    <a class="dropdown-item" href="{{ route('shops') }}">Shop</a>
+                                    @foreach ($categories as $category)
+                                    <a class="dropdown-item" href="{{ route('shops.show', $category->id) }}">{{ $category->category_name }}</a>
+                                    @endforeach
+                            {{-- <a class="dropdown-item" href="/product-single">Single Product</a> --}}
+                            {{-- <a class="dropdown-item" href="/cart">Cart</a> --}}
                             <a class="dropdown-item" href="/checkout">Checkout</a>
                         </div>
                     </li>
-                    <li class="nav-item "><a href="/about" class="nav-link {{Request::is('about') ? 'active' : ''}}">About</a></li>
+                    <li class="nav-item "><a href="/about"
+                            class="nav-link {{ Request::is('about') ? 'active' : '' }}">About</a></li>
                     {{-- <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li> --}}
-                    <li class="nav-item "><a href="/contact" class="nav-link {{Request::is('contact') ? 'active' : ''}}">Contact</a></li>
-                    <li class="nav-item cta cta-colored"><a href="/cart" class="nav-link"><span
-                                class="icon-shopping_cart"></span>[0]</a></li>
-                    <li class="nav-item" >
-                        <a href="/profile" class="icons nav-link {{Request::is('profile') ? 'active' : ''}}">
-                            <i class="fa-solid fa-user" style="font-size:1.2em"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item "><a href="/login" class="nav-link {{Request::is('login') ? 'active' : ''}}">Login</a></li>
-                    <li class="nav-item"><a href="/register" class="nav-link {{Request::is('register') ? 'active' : ''}}">Register</a></li>
-                    <li class="nav-item"><a href="/admin" class="nav-link {{Request::is('admin') ? 'active' : ''}}">Admin</a></li>
+                    <li class="nav-item "><a href="/contact"
+                            class="nav-link {{ Request::is('contact') ? 'active' : '' }}">Contact</a></li>
+
+                            @if (Session::has('user') || Session::has('admin'))
+                    <li class="nav-item cta cta-colored"><a href="{{ route('carts.index') }}" class="nav-link"><span
+                                class="icon-shopping_cart"></span>[{{ $cartCount }}]</a></li>
+                                @endif
+                    @if ($user = Session::get('user'))
+                        <li class="nav-item">
+                            <a href="{{ route('users.edit', $user->id) }}" class="icons nav-link {{ Request::is('users/{user}/edit') ? 'active' : '' }}">
+                                <i class="fa-solid fa-user" style="font-size:1.2em"></i>
+                            </a>
+                        </li>
+                    @endif
+                    @if (Session::has('user') || Session::has('admin'))
+                        <li class="nav-item"><a href="{{ route('logout') }}"
+                                class="nav-link {{ Request::is('logout') ? 'active' : '' }}">Logout</a></li>
+                    @else
+                        <li class="nav-item "><a href="{{ route('login') }}"
+                                class="nav-link {{ Request::is('login') ? 'active' : '' }}">Login</a></li>
+                        <li class="nav-item"><a href="{{ route('register') }}"
+                                class="nav-link {{ Request::is('register') ? 'active' : '' }}">Register</a></li>
+                    @endif
+                    @if (Session::has('admin'))
+                        <li class="nav-item"><a href="{{ route('dashboard') }}"
+                                class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}">Admin</a></li>
+                    @endif
                 </ul>
             </div>
         </div>

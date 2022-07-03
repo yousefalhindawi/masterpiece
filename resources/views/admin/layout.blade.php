@@ -21,50 +21,56 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="{{asset('admin_style/lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
-    <link href="{{asset('admin_style/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css')}}" rel="stylesheet" />
+    <link href="{{ asset('admin_style/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin_style/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css') }}"
+        rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="{{asset('admin_style/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('admin_style/css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="{{asset('admin_style/css/style.css')}}" rel="stylesheet">
+    <link href="{{ asset('admin_style/css/style.css') }}" rel="stylesheet">
 </head>
 <style>
-    .text-primary{
+    .text-primary {
         color: #82ae46 !important;
     }
-    .btn-primary{
+
+    .btn-primary {
         background-color: #82ae46 !important;
-    border-color: #82ae46 !important;
+        border-color: #82ae46 !important;
     }
-    .active{
+
+    .active {
         color: #82ae46 !important;
     }
 </style>
+
 <body>
     <div class="container-fluid position-relative bg-white d-flex p-0">
 
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
-                <a href="{{route('admin')}}" class="navbar-brand mx-4 mb-3">
+                <a href="{{ route('dashboard') }}" class="navbar-brand mx-4 mb-3">
                     <h3 class="text-primary">DASHBOARD</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
 
                     <div class="ms-3">
-                        <h6 class="mb-0">Jhon Doe</h6>
-                        <span>Admin</span>
+                        @if ($admin = Session::get('admin'))
+                            <h6 class="mb-0">{{ $admin->name }}</h6>
+                        @endif
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="{{route('admin')}}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <a href="{{route('admin/users')}}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Users</a>
-                    <a href="{{route('admin/admins')}}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>ِAdmin</a>
-                    <a href="{{route('admin/add_interview_qustions')}}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Categories</a>
-                    <a href="{{route('admin/add_interview_qustions')}}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Products</a>
-                    <a href="{{route('admin/add_interview_qustions')}}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>orders</a>
+                    <a href="{{ route('dashboard') }}" class="nav-item nav-link active"><i
+                            class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Users</a>
+                    <a href="" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>ِAdmin</a>
+                    <a href="" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Categories</a>
+                    <a href="" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Products</a>
+                    <a href="" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>orders</a>
                     <div class="nav-item dropdown">
                         {{-- <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Quizzes</a> --}}
                         {{-- <div class="dropdown-menu bg-transparent border-0">
@@ -160,12 +166,14 @@
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <span class="d-none d-lg-inline-flex">John Doe</span>
+                            @if ($admin = Session::get('admin'))
+                                <span class="d-none d-lg-inline-flex">{{ $admin->name }}</span>
+                            @endif
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
                             <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item">Log Out</a>
+                            <a href="{{ route('logout') }}" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
                 </div>
@@ -175,7 +183,7 @@
 
 
 
-@yield('content')
+            @yield('content')
 
 
             <!-- Footer Start -->
@@ -204,13 +212,13 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{asset('admin_style/lib/chart/chart.min.js')}}"></script>
-    <script src="{{asset('admin_style/lib/easing/easing.min.js')}}"></script>
-    <script src="{{asset('admin_style/lib/waypoints/waypoints.min.js')}}"></script>
-    <script src="{{asset('admin_style/lib/owlcarousel/owl.carousel.min.js')}}"></script>
-    <script src="{{asset('admin_style/lib/tempusdominus/js/moment.min.js')}}"></script>
-    <script src="{{asset('admin_style/lib/tempusdominus/js/moment-timezone.min.js')}}"></script>
-    <script src="{{asset('admin_style/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js')}}"></script>
+    <script src="{{ asset('admin_style/lib/chart/chart.min.js') }}"></script>
+    <script src="{{ asset('admin_style/lib/easing/easing.min.js') }}"></script>
+    <script src="{{ asset('admin_style/lib/waypoints/waypoints.min.js') }}"></script>
+    <script src="{{ asset('admin_style/lib/owlcarousel/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('admin_style/lib/tempusdominus/js/moment.min.js') }}"></script>
+    <script src="{{ asset('admin_style/lib/tempusdominus/js/moment-timezone.min.js') }}"></script>
+    <script src="{{ asset('admin_style/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js') }}"></script>
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>

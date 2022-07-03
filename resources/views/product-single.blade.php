@@ -1,13 +1,18 @@
 @extends('./layouts.master')
 @section('title', 'Single Product')
 @section('content')
-
-<div class="hero-wrap hero-bread" style="background-image: url('images/bg_1.jpg');">
+<style>
+    .price-dc{
+        text-decoration: line-through;
+    color: #b3b3b3;
+    }
+</style>
+<div class="hero-wrap hero-bread" style="background-image: url({{ asset('images/bg_1.jpg')}});">
     <div class="container">
       <div class="row no-gutters slider-text align-items-center justify-content-center">
         <div class="col-md-9 ftco-animate text-center">
-            <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span class="mr-2"><a href="index.html">Product</a></span> <span>Product Single</span></p>
-          <h1 class="mb-0 bread">Product Single</h1>
+            <p class="breadcrumbs"><span class="mr-2"><a href="{{ route('home') }}">Home</a></span> <span class="mr-2"><a href="{{ route('shops') }}">Product</a></span> <span>Product Single</span></p>
+          <h1 class="mb-0 bread">{{ $product->product_name }}</h1>
         </div>
       </div>
     </div>
@@ -17,11 +22,11 @@
       <div class="container">
           <div class="row">
               <div class="col-lg-6 mb-5 ftco-animate">
-                  <a href="images/product-1.jpg" class="image-popup"><img src="images/product-1.jpg" class="img-fluid" alt="Colorlib Template"></a>
+                  <a href="images/product-1.jpg" class="image-popup"><img src="{{ asset('ProductImage/'.$product->product_img) }}" class="img-fluid" alt="Colorlib Template"></a>
               </div>
               <div class="col-lg-6 product-details pl-md-5 ftco-animate">
-                  <h3>Bell Pepper</h3>
-                  <div class="rating d-flex">
+                  <h3>{{ $product->product_name }}</h3>
+                  {{-- <div class="rating d-flex">
                           <p class="text-left mr-4">
                               <a href="#" class="mr-2">5.0</a>
                               <a href="#"><span class="ion-ios-star-outline"></span></a>
@@ -36,12 +41,21 @@
                           <p class="text-left">
                               <a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
                           </p>
-                      </div>
-                  <p class="price"><span>$120.00</span></p>
-                  <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Text should turn around and return to its own, safe country. But nothing the copy said could convince her and so it didn’t take long until.
+                      </div> --}}
+                      <div class="d-flex">
+                        <div class="pricing">
+                            <p class="price"><span class="mr-2 @if ($product->sale_status === 1) price-dc @endif">{{ $product->product_price }}JD/kilo</span>
+                                @if ($product->sale_status === 1)
+                                <span class="price-sale">{{ $product->product_price_on_sale }}JD/kilo</span>
+                            </p>
+                                @endif
+                        </div>
+                    </div>
+                  {{-- <p class="price"><span>{{ {{ $product->product_name }} }}</span></p> --}}
+                  <p>{{ $product->product_description }}
                       </p>
                       <div class="row mt-4">
-                          <div class="col-md-6">
+                          {{-- <div class="col-md-6">
                               <div class="form-group d-flex">
                     <div class="select-wrap">
                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
@@ -53,9 +67,12 @@
                     </select>
                   </div>
                   </div>
-                          </div>
+                          </div> --}}
+
+                          <form method="POST" action="{{ route('carts.store')}}">
+                        @csrf
                           <div class="w-100"></div>
-                          <div class="input-group col-md-6 d-flex mb-3">
+                          <div class="input-group col-md-8 d-flex mb-3">
                    <span class="input-group-btn mr-2">
                       <button type="button" class="quantity-left-minus btn"  data-type="minus" data-field="">
                      <i class="ion-ios-remove"></i>
@@ -70,10 +87,15 @@
                 </div>
                 <div class="w-100"></div>
                 <div class="col-md-12">
-                    <p style="color: #000;">600 kg available</p>
+                    <p style="color: #000;">{{ $product->product_quantity }} kg available</p>
                 </div>
             </div>
-            <p><a href="/cart" class="btn btn-black py-3 px-5">Add to Cart</a></p>
+
+
+                <input type="hidden" name="product_price" value="{{ $product->sale_status === 1 ? $product->product_price_on_sale : $product->product_price }}"/>
+                <input type="hidden" name="product_id" value="{{ $product->id }}"/>
+                <input type="submit" href="/cart" class="btn btn-primary py-3 px-5" value="Add to Cart"/>
+            </form>
               </div>
           </div>
       </div>
@@ -93,7 +115,7 @@
           <div class="row">
               <div class="col-md-6 col-lg-3 ftco-animate">
                   <div class="product">
-                      <a href="#" class="img-prod"><img class="img-fluid" src="images/product-1.jpg" alt="Colorlib Template">
+                      <a href="#" class="img-prod"><img class="img-fluid" src="{{ asset('images/product-1.jpg') }}" alt="Colorlib Template">
                           <span class="status">30%</span>
                           <div class="overlay"></div>
                       </a>
@@ -122,7 +144,7 @@
               </div>
               <div class="col-md-6 col-lg-3 ftco-animate">
                   <div class="product">
-                      <a href="#" class="img-prod"><img class="img-fluid" src="images/product-2.jpg" alt="Colorlib Template">
+                      <a href="#" class="img-prod"><img class="img-fluid" src="{{ asset('images/product-2.jpg') }}" alt="Colorlib Template">
                           <div class="overlay"></div>
                       </a>
                       <div class="text py-3 pb-4 px-3 text-center">
@@ -150,7 +172,7 @@
               </div>
               <div class="col-md-6 col-lg-3 ftco-animate">
                   <div class="product">
-                      <a href="#" class="img-prod"><img class="img-fluid" src="images/product-3.jpg" alt="Colorlib Template">
+                      <a href="#" class="img-prod"><img class="img-fluid" src="{{ asset('images/product-3.jpg') }}" alt="Colorlib Template">
                           <div class="overlay"></div>
                       </a>
                       <div class="text py-3 pb-4 px-3 text-center">
@@ -178,7 +200,7 @@
               </div>
               <div class="col-md-6 col-lg-3 ftco-animate">
                   <div class="product">
-                      <a href="#" class="img-prod"><img class="img-fluid" src="images/product-4.jpg" alt="Colorlib Template">
+                      <a href="#" class="img-prod"><img class="img-fluid" src="{{ asset('images/product-4.jpg') }}" alt="Colorlib Template">
                           <div class="overlay"></div>
                       </a>
                       <div class="text py-3 pb-4 px-3 text-center">

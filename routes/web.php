@@ -1,6 +1,15 @@
 <?php
 
+use App\Models\Carts;
+use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\ShopController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CartsController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,16 +21,29 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+view()->composer(['layouts.nav'], function ($view) {
+    $categories = Category::all();
+     $cartCount =Session::has('user') ? (Carts::where('user_id', Session::get('user')->id)->count()) : 0 ;
+    $view->with('categories', $categories)->with( 'cartCount', $cartCount); // bind data to view
+});
 Route::get('/', function () {
-    return view('index');
-});
-Route::get('/shop', function () {
-    return view('shop');
-});
-Route::get('/product-single', function () {
-    return view('product-single');
-});
+    $featureProducts = Product::paginate(8);
+    $onsalesProducts = Product::where('sale_status',1)->paginate(8);
+    return view('index', compact('onsalesProducts','featureProducts'));
+})->name('home');
+
+Route::get('/shops', [ShopController::class, 'index'])->name('shops');
+Route::get('/shops/{shop}', [ShopController::class, 'show'])->name('shops.show');
+
+
+Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+
+
+Route::post('/carts', [CartsController::class, 'store'])->name('carts.store');
+Route::get('/carts', [CartsController::class, 'index'])->name('carts.index');
+Route::put('/carts/{cart}', [CartsController::class, 'update'])->name('carts.update');
+Route::delete('/carts/{cart}', [CartsController::class, 'destroy'])->name('carts.destroy');
+
 Route::get('/cart', function () {
     return view('cart');
 });
@@ -34,46 +56,93 @@ Route::get('/about', function () {
 Route::get('/contact', function () {
     return view('contact');
 });
-Route::get('/profile', function () {
-    return view('profile');
-});
-Route::get('/login', function () {
-    return view('login');
-});
-Route::get('/register', function () {
-    return view('register');
-});
+// Route::get('/profile', function () {
+//     return view('profile');
+// })->name('profile');
 
+// User Routes
+Route::post('/users/store', [UserController::class, 'store'])->name('users.store');
+Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+Route::post('/loginAuthenticate',[UserController::class,'Authenticate'])->name('users.Authenticate');
+Route::put('/users/{user}',[UserController::class,'update'])->name('users.update');
+// Route::resource('/users', UserController::class);
+Route::get('/users/{user}/edit',[UserController::class,'edit'])->name('users.edit');
+
+Route::group(['middleware'=>['user']],function(){
+
+    Route::get('/login', [UserController::class, 'login'])->name('login');
+    Route::get('/register', [UserController::class, 'create'])->name('register');
+
+});
 
 //dashboard routes
-Route::get('admin', function () {
-    return view('admin.index');
-})->name('admin');
 
-Route::get('admin/users', function () {
-    return view('admin.users');
-})->name('admin/users');
 
-//start admins routes
-Route::get('admin/admins', function () {
-    return view('admin.admins.index');
-})->name('admin/admins');
+// Route::get('admin/users', function () {
+//     return view('admin.users');
+// })->name('admin/users');
 
-Route::get('/admin/edit', function () {
-    return view('admin.admins.edit');
+// //start admins routes
+// Route::get('admin/admins', function () {
+//     return view('admin.admins.index');
+// })->name('admin/admins');
+
+// Route::get('/admin/edit', function () {
+//     return view('admin.admins.edit');
+// });
+// Route::get('/admin/create', function () {
+//     return view('admin.admins.create');
+// });
+
+// Route::get('admin/addquiz', function () {
+//     return view('admin.add_quiz');
+// })->name('admin/add_quiz');
+
+// Route::get('admin/addqustions', function () {
+//     return view('admin.add_qustions');
+// })->name('admin/add_qustions');
+
+// Route::get('admin/qustions', function () {
+//     return view('admin.qustions');
+// })->name('admin/add_interview_qustions');
+
+
+
+
+Route::group(['middleware'=>['admin']],function(){
+    //dashboard
+    Route::get('/dashboard' ,[DashboardController::class,'index'])->name('dashboard');
+//     //users
+//     Route::get('/admin/users' ,[userController::class,'index']);
+//     Route::delete('/admin/user/{id}',[userController::class, 'destroy']);
+
+
+//     //admins
+//     Route::get('/admins',[AdminController::class, 'index']);
+//     Route::post('/admins',[AdminController::class, 'store']);
+//     Route::get('/admins/create', function () {
+//         return view('/Admin/admins/create');
+//     });
+//     Route::delete('/admin/{id}',[AdminController::class, 'destroy']);
+//     //Book
+//     Route::get('/admin/books',[BookController::class, 'index']);
+//     Route::delete('/admin/Books/delete/{id}',[BookController::class, 'destroy']);
+//     Route::put('/admin/book/edit/{id}',[BookController::class, 'editState']);
+//     Route::get('/admin/book/edit/{id}/edit',[BookController::class, 'edit']);
+//     Route::get('/admin/posts/update',[PostController::class, 'update']);
+//     //contacts
+//     Route::get('/admin/contacts',[ContactController::class,'index']);
+//     Route::delete('/admin/contact/delete/{id}',[ContactController::class,'destroy']);
+
+//     //categories
+//     Route::get('/admin/category',[CategoryController::class, 'index']);
+//     Route::get('/admin/category/create',[CategoryController::class, 'create']);
+//     Route::post('/admin/category/create',[CategoryController::class, 'store']);
+//     Route::get('/admin/category/edit/{id}/edit',[CategoryController::class, 'edit']);
+//     Route::put('/admin/category/edit/{id}',[CategoryController::class, 'update']);
+//     Route::delete('/admin/category/delete/{id}',[CategoryController::class, 'destroy']);
+
+//     //logout
+//     Route::get('/admin/logout',[AdminController::class,'logout']);
 });
-Route::get('/admin/create', function () {
-    return view('admin.admins.create');
-});
-
-Route::get('admin/addquiz', function () {
-    return view('admin.add_quiz');
-})->name('admin/add_quiz');
-
-Route::get('admin/addqustions', function () {
-    return view('admin.add_qustions');
-})->name('admin/add_qustions');
-
-Route::get('admin/qustions', function () {
-    return view('admin.qustions');
-})->name('admin/add_interview_qustions');
+// End Admin page route

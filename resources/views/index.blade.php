@@ -4,6 +4,11 @@
 
 
 <section id="home-section" class="hero">
+    @if (Session::get('success'))
+    <div class="alert alert-success text-center fw-bolder" role="alert">
+        {{ Session::get('success') }}
+    </div>
+    @endif
     <div class="home-slider owl-carousel">
     <div class="slider-item" style="background-image: url(images/bg_1.jpg);">
         <div class="overlay"></div>
@@ -98,19 +103,19 @@
                               <div class="text text-center">
                                   <h2>Vegetables</h2>
                                   <p>Protect the health of every home</p>
-                                  <p><a href="#" class="btn btn-primary">Shop now</a></p>
+                                  <p><a href="{{ route('shops') }}" class="btn btn-primary">Shop now</a></p>
                               </div>
                           </div>
                       </div>
                       <div class="col-md-6">
                           <div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(images/category-1.jpg);">
                               <div class="text px-3 py-1">
-                                  <h2 class="mb-0"><a href="#">Fruits</a></h2>
+                                  <h2 class="mb-0"><a href="{{ route('shops.show', 1) }}">Fruits</a></h2>
                               </div>
                           </div>
                           <div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url(images/category-2.jpg);">
                               <div class="text px-3 py-1">
-                                  <h2 class="mb-0"><a href="#">Vegetables</a></h2>
+                                  <h2 class="mb-0"><a href="{{ route('shops.show', 2) }}">Vegetables</a></h2>
                               </div>
                           </div>
                       </div>
@@ -120,12 +125,12 @@
               <div class="col-md-4">
                   <div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(images/category-3.jpg);">
                       <div class="text px-3 py-1">
-                          <h2 class="mb-0"><a href="#">Juices</a></h2>
+                          <h2 class="mb-0"><a href="{{ route('shops.show', 3) }}">Herbs</a></h2>
                       </div>
                   </div>
                   <div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url(images/category-4.jpg);">
                       <div class="text px-3 py-1">
-                          <h2 class="mb-0"><a href="#">Dried</a></h2>
+                          <h2 class="mb-0"><a href="{{ route('shops.show', 4) }}">Dates</a></h2>
                       </div>
                   </div>
               </div>
