@@ -3,11 +3,13 @@
 use App\Models\Carts;
 use App\Models\Product;
 use App\Models\Category;
+use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartsController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DashboardController;
 
@@ -28,8 +30,9 @@ view()->composer(['layouts.nav'], function ($view) {
 });
 Route::get('/', function () {
     $featureProducts = Product::paginate(8);
-    $onsalesProducts = Product::where('sale_status',1)->paginate(8);
-    return view('index', compact('onsalesProducts','featureProducts'));
+    $categories = Category::all();
+    $onsalesProducts = Product::where('sale_status_id',1)->paginate(8);
+    return view('index', compact('onsalesProducts','featureProducts','categories'));
 })->name('home');
 
 Route::get('/shops', [ShopController::class, 'index'])->name('shops');
@@ -44,12 +47,21 @@ Route::get('/carts', [CartsController::class, 'index'])->name('carts.index');
 Route::put('/carts/{cart}', [CartsController::class, 'update'])->name('carts.update');
 Route::delete('/carts/{cart}', [CartsController::class, 'destroy'])->name('carts.destroy');
 
-Route::get('/cart', function () {
-    return view('cart');
-});
-Route::get('/checkout', function () {
-    return view('checkout');
-});
+Route::get('/checkout', [CartsController::class, 'checkout'])->name('carts.checkout');
+Route::post('/placeorder', [CartsController::class, 'placeOrder'])->name('carts.placeorder');
+Route::get('/myorders', [CartsController::class, 'myOrders'])->name('carts.myorders');
+Route::post('/ordersDetails', [CartsController::class, 'ordersDetails'])->name('carts.ordersDetails');
+
+
+Route::post('/coupon',[CouponController::class, 'store'])->name('coupon.store');
+Route::get('/coupon/remove',[CouponController::class, 'remove'])->name('coupon.remove');
+
+// Route::get('/cart', function () {
+//     return view('cart');
+// });
+// Route::get('/checkout', function () {
+//     return view('checkout');
+// });
 Route::get('/about', function () {
     return view('about');
 });
@@ -73,6 +85,14 @@ Route::group(['middleware'=>['user']],function(){
     Route::get('/login', [UserController::class, 'login'])->name('login');
     Route::get('/register', [UserController::class, 'create'])->name('register');
 
+});
+
+
+
+
+// 404 Page
+Route::fallback(function (){
+    return view('notFound');
 });
 
 //dashboard routes
@@ -109,9 +129,9 @@ Route::group(['middleware'=>['user']],function(){
 
 
 
+Route::get('/dashboard' ,[DashboardController::class,'index'])->name('dashboard');
 Route::group(['middleware'=>['admin']],function(){
     //dashboard
-    Route::get('/dashboard' ,[DashboardController::class,'index'])->name('dashboard');
 //     //users
 //     Route::get('/admin/users' ,[userController::class,'index']);
 //     Route::delete('/admin/user/{id}',[userController::class, 'destroy']);
@@ -146,3 +166,8 @@ Route::group(['middleware'=>['admin']],function(){
 //     Route::get('/admin/logout',[AdminController::class,'logout']);
 });
 // End Admin page route
+
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});

@@ -19,7 +19,10 @@ class UserAuth
         if (!$request->session()->has('user') && !$request->session()->has('admin') && $request->path() != 'login' && $request->path() != 'register' && $request->path() != 'users/{user}/edit') {
             return redirect()->route('login')->withFailure(__('You must login.'));
         }
-        if ($request->session()->has('user') || $request->session()->has('admin') && ($request->path() =='login' || $request->path() == 'register')) {
+        // if ($request->session()->has('user') && $request->path() =='users/{user}/edit') {
+        //     return redirect()->route('users.edit');
+        // }
+        if ($request->path() != 'users/{user}/edit' && $request->session()->has('user') || $request->session()->has('admin') && ($request->path() =='login' || $request->path() == 'register' )) {
             return back();
         }
 

@@ -29,20 +29,20 @@
                 @foreach ($products as $product)
                     <div class="col-md-6 col-lg-3 ftco-animate">
                         <div class="product">
-                            <a href="{{ route('products.show', $product->id) }}" class="img-prod"><img class="img-fluid"
-                                    src="{{ asset('ProductImage/' . $product->product_img) }}" alt="Colorlib Template">
-                                    @if ($product->sale_status === 1)
-                                    <span class="status">{{ (($product->product_price-$product->product_price_on_sale)/$product->product_price)*100 }}%</span>
+                            <a href="{{ route('products.show', $product->id) }}" class="img-prod"><img class="img-fluid" style="height:300px"
+                                    src="{{ asset('storage/'.(str_replace('\\', '/', ($product->product_img)))) }}" alt="Colorlib Template">
+                                    @if ($product->sale_status_id === 1)
+                                    <span class="status">{{ round(((($product->product_price-$product->product_price_on_sale)/$product->product_price)*100),2) }}%</span>
                                     @endif
                                 <div class="overlay"></div>
                             </a>
                             <div class="text py-3 pb-4 px-3 text-center">
                                 <h3><a href="#">{{ $product->product_name }}</a></h3>
-                                <p><a href="#">{{ $product->product_description }}</a></p>
+                                {{-- <p><a href="#">{{ str_replace('<p>', '',substr(($product->product_description),0,30) )}}</a></p> --}}
                                 <div class="d-flex">
                                     <div class="pricing">
-                                        <p class="price"><span class="mr-2 @if ($product->sale_status === 1) price-dc @endif">{{ $product->product_price }}JD/kilo</span>
-                                            @if ($product->sale_status === 1)
+                                        <p class="price"><span class="mr-2 @if ($product->sale_status_id === 1) price-dc @endif">{{ $product->product_price }}JD/kilo</span>
+                                            @if ($product->sale_status_id === 1)
                                             <span class="price-sale">{{ $product->product_price_on_sale }}JD/kilo</span>
                                         </p>
                                             @endif

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
+use App\Models\Coupon;
 use Illuminate\Http\Request;
 
-class OrderController extends Controller
+class CouponController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //GET
-        
+        //
     }
 
     /**
@@ -37,15 +36,25 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         //POST
+        // dd($request->all());
+        $coupon = Coupon::where('code', $request->code)->first();
+        // dd ($coupon);
+
+        if(!$coupon){
+            return redirect()->route('carts.checkout')->withFailure(__('Invalid coupon code, please try again'));
+        }
+
+        session()->put('coupon', $coupon);
+        return redirect()->route('carts.checkout')->withSuccess(__('Coupon has been applied!'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Order  $order
+     * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show(Coupon $coupon)
     {
         //
     }
@@ -53,10 +62,10 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Order  $order
+     * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function edit(Order $order)
+    public function edit(Coupon $coupon)
     {
         //
     }
@@ -65,10 +74,10 @@ class OrderController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Order  $order
+     * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, Coupon $coupon)
     {
         //
     }
@@ -76,11 +85,19 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Order  $order
+     * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy(Coupon $coupon)
     {
-        //
+        //delete
+    }
+    public function remove()
+    {
+        //post
+
+        session()->forget('coupon');
+        return redirect()->route('carts.checkout')->withSuccess(__('Coupon has been removed!'));
+        // dd($coupon);
     }
 }

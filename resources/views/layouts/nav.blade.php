@@ -31,6 +31,8 @@
     <link rel="stylesheet" href="{{ url('css/icomoon.css') }}">
     <link rel="stylesheet" href="{{ url('css/style.css') }}">
 
+    <link rel="stylesheet" href="{{ url('css/NotFoundstyle.css') }}">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -98,7 +100,7 @@
                                     @endforeach
                             {{-- <a class="dropdown-item" href="/product-single">Single Product</a> --}}
                             {{-- <a class="dropdown-item" href="/cart">Cart</a> --}}
-                            <a class="dropdown-item" href="/checkout">Checkout</a>
+                            {{-- <a class="dropdown-item" href="/checkout">Checkout</a> --}}
                         </div>
                     </li>
                     <li class="nav-item "><a href="/about"
@@ -127,8 +129,8 @@
                         <li class="nav-item"><a href="{{ route('register') }}"
                                 class="nav-link {{ Request::is('register') ? 'active' : '' }}">Register</a></li>
                     @endif
-                    @if (Session::has('admin'))
-                        <li class="nav-item"><a href="{{ route('dashboard') }}"
+                    @if (Session::has('user') && Session::get('user')->role_id === 1)
+                        <li class="nav-item"><a href="{{ url('/admin') }}"
                                 class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}">Admin</a></li>
                     @endif
                 </ul>

@@ -14,6 +14,12 @@ class Product extends Model
     public function category(){
         return $this->belongsTo(Category::class);
     }
+    public function status(){
+        return $this->belongsTo(Status::class);
+    }
+    public function feature(){
+        return $this->belongsTo(Feature::class);
+    }
     public function users(){
         return $this->belongsToMany(User::class, 'orders','product_id','user_id');
     }

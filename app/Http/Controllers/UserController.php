@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserController extends Controller
@@ -87,8 +88,12 @@ class UserController extends Controller
     public function edit(User $user)
     {
         //GET
+        if (Session::has('user')) {
         return view('profile', compact('user'));
+    } else {
+        return redirect()->route('login')->withFailure(__('You must login to see this page'));
     }
+}
 
     /**
      * Update the specified resource in storage.
@@ -130,7 +135,7 @@ class UserController extends Controller
             $user->address = $request->post('address');
             $user->user_img = $imageName;
             $user->update();
-            return redirect()->route('users.edit', $user->id)->withSuccess(__('Post updated successfully.'));
+            return redirect()->route('users.edit', $user->id)->withSuccess(__('Information updated successfully.'));
         } catch (ModelNotFoundException $exception) {
             return back()->withError($exception->getMessage())->withInput();
         };
@@ -167,14 +172,14 @@ class UserController extends Controller
                 return back()->withFailure(__("We don't recognize your email address."));
             } else {
                 if ($userInfo && Hash::check($formFields['password'], $userInfo->password)) {
-                    if ($userInfo->role == '0') {
+                    // if ($userInfo->role_id  == '2') {
                         $request->session()->put('user', $userInfo);
                         return redirect()->route('home');
-                    }
-                    if ($userInfo->role == '1') {
-                        $request->session()->put('admin', $userInfo);
-                        return redirect()->route('dashboard');
-                    }
+                    // }
+                    // if ($userInfo->role_id == '1') {
+                    //     $request->session()->put('admin', $userInfo);
+                    //     return redirect()->route('dashboard');
+                    // }
                 }
             }
         } catch (ModelNotFoundException $exception) {

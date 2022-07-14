@@ -53,7 +53,7 @@
                                         </td>
 
                                         <td class="price">
-                                            {{ $item->sale_status === 1 ? $item->product_price_on_sale : $item->product_price }}JD
+                                            {{ $item->sale_status_id === 1 ? $item->product_price_on_sale : $item->product_price }}JD
                                         </td>
 
                                         <td class="quantity">
@@ -62,7 +62,7 @@
                                                 @method('PUT')
                                                 @csrf
                                                 <input type="hidden" name='product_price'
-                                                    value="{{ $item->sale_status === 1 ? $item->product_price_on_sale : $item->product_price }}">
+                                                    value="{{ $item->sale_status_id === 1 ? $item->product_price_on_sale : $item->product_price }}">
                                                 <input type="number" name="quantity" value="{{ $item->quantity }}"
                                                     class="quantity form-control input-number" value="1" min="1"
                                                     max="100">
@@ -79,7 +79,7 @@
                 </div>
             </div>
             <div class="row justify-content-end">
-                <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+                {{-- <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
                     <div class="cart-total mb-3">
                         <h3>Coupon Code</h3>
                         <p>Enter your coupon code if you have one</p>
@@ -91,8 +91,8 @@
                         </form>
                     </div>
                     <p><a href="checkout.html" class="btn btn-primary py-3 px-4">Apply Coupon</a></p>
-                </div>
-                <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+                </div> --}}
+                {{-- <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
                     <div class="cart-total mb-3">
                         <h3>Estimate shipping and tax</h3>
                         <p>Enter your destination to get a shipping estimate</p>
@@ -112,17 +112,17 @@
                         </form>
                     </div>
                     <p><a href="checkout.html" class="btn btn-primary py-3 px-4">Estimate</a></p>
-                </div>
+                </div> --}}
                 <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
-                    <div class="cart-total mb-3">
+                    {{-- <div class="cart-total mb-3">
                         <h3>Cart Totals</h3>
                         <p class="d-flex">
                             <span>Subtotal</span>
-                            <span>$20.60</span>
+                            <span>{{ $total_total }}JD</span>
                         </p>
                         <p class="d-flex">
                             <span>Delivery</span>
-                            <span>$0.00</span>
+                            <span>1.00JD</span>
                         </p>
                         <p class="d-flex">
                             <span>Discount</span>
@@ -133,8 +133,8 @@
                             <span>Total</span>
                             <span>$17.60</span>
                         </p>
-                    </div>
-                    <p><a href="/checkout" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
+                    </div> --}}
+                    <p><a href="{{ route('carts.checkout') }}" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
                 </div>
             </div>
         </div>

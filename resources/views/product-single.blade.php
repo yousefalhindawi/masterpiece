@@ -22,7 +22,7 @@
       <div class="container">
           <div class="row">
               <div class="col-lg-6 mb-5 ftco-animate">
-                  <a href="images/product-1.jpg" class="image-popup"><img src="{{ asset('ProductImage/'.$product->product_img) }}" class="img-fluid" alt="Colorlib Template"></a>
+                  <a href="images/product-1.jpg" class="image-popup"><img src="{{  asset('storage/'.(str_replace('\\', '/', ($product->product_img)))) }}" class="img-fluid" alt="Colorlib Template"></a>
               </div>
               <div class="col-lg-6 product-details pl-md-5 ftco-animate">
                   <h3>{{ $product->product_name }}</h3>
@@ -44,8 +44,8 @@
                       </div> --}}
                       <div class="d-flex">
                         <div class="pricing">
-                            <p class="price"><span class="mr-2 @if ($product->sale_status === 1) price-dc @endif">{{ $product->product_price }}JD/kilo</span>
-                                @if ($product->sale_status === 1)
+                            <p class="price"><span class="mr-2 @if ($product->sale_status_id === 1) price-dc @endif">{{ $product->product_price }}JD/kilo</span>
+                                @if ($product->sale_status_id === 1)
                                 <span class="price-sale">{{ $product->product_price_on_sale }}JD/kilo</span>
                             </p>
                                 @endif
@@ -92,7 +92,7 @@
             </div>
 
 
-                <input type="hidden" name="product_price" value="{{ $product->sale_status === 1 ? $product->product_price_on_sale : $product->product_price }}"/>
+                <input type="hidden" name="product_price" value="{{ $product->sale_status_id === 1 ? $product->product_price_on_sale : $product->product_price }}"/>
                 <input type="hidden" name="product_id" value="{{ $product->id }}"/>
                 <input type="submit" href="/cart" class="btn btn-primary py-3 px-5" value="Add to Cart"/>
             </form>

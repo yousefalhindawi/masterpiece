@@ -17,8 +17,9 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned()->nullable(false);
             $table->bigInteger('product_id')->unsigned()->nullable(false);
-            $table->double('order_total_amount')->unsigned();
+            $table->double('order_total_price')->unsigned();
             $table->bigInteger('product_quantity')->unsigned();
+            $table->double('product_sub_total')->unsigned();
             $table->string('address');
             $table->string('phone');
             $table->string('order_status');
