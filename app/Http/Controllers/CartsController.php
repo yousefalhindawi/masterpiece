@@ -66,7 +66,7 @@ class CartsController extends Controller
                     $cart->quantity =  $cart->quantity + $request->quantity;
                     $cart->sub_total = $cart->sub_total + (($request->quantity) * ($request->product_price));
                     $cart->update();
-                    return back();
+                    return redirect(url()->previous()."#$request->product_id");
                 } else {
 
                     $cart = new Carts();
@@ -75,7 +75,7 @@ class CartsController extends Controller
                     $cart->quantity = $request->quantity;
                     $cart->sub_total = ($request->quantity) * ($request->product_price);
                     $cart->save();
-                    return back();
+                    return redirect(url()->previous()."#$request->product_id");
                 }
             } else {
                 return redirect()->route('login')->withFailure(__('You must login to purchase this product'));

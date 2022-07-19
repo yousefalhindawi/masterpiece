@@ -29,9 +29,9 @@ view()->composer(['layouts.nav'], function ($view) {
     $view->with('categories', $categories)->with( 'cartCount', $cartCount); // bind data to view
 });
 Route::get('/', function () {
-    $featureProducts = Product::paginate(8);
+    $featureProducts = Product::where('product_feature_id', 1)->where('sale_status_id', 2)->limit(8)->get();
     $categories = Category::all();
-    $onsalesProducts = Product::where('sale_status_id',1)->paginate(8);
+    $onsalesProducts = Product::where('sale_status_id',1)->limit(8)->get();
     return view('index', compact('onsalesProducts','featureProducts','categories'));
 })->name('home');
 

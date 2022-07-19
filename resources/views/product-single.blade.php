@@ -52,7 +52,7 @@
                         </div>
                     </div>
                   {{-- <p class="price"><span>{{ {{ $product->product_name }} }}</span></p> --}}
-                  <p>{{ $product->product_description }}
+                  <p>{{ strip_tags($product->product_description) }}
                       </p>
                       <div class="row mt-4">
                           {{-- <div class="col-md-6">

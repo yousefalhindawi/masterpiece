@@ -52,8 +52,8 @@ class ShopController extends Controller
     {
         //GET
         $categories = Category::all();
-        $products = Product::where('category_id', $id)->join('categories', 'products.category_id', '=', 'categories.id')->get();
-        // dd($data);
+        $products = Product::where('category_id', $id)->join('categories', 'products.category_id', '=', 'categories.id')->get(['categories.category_name','products.id','products.product_name','products.product_description','products.product_img','products.product_price','products.product_price_on_sale','products.category_id','products.sale_status_id','products.product_feature_id']);
+        // dd($products);
         return view('shop', compact('products','categories'));
     }
 

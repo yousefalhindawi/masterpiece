@@ -50,7 +50,7 @@
                             <input type="email" name='email' value='{{ old('email') }}' id="form3Example3"
                                 class="form-control form-control-lg" placeholder="Enter a valid email address" autofocus />
                             @error('email')
-                                <div class="text-danger fw-bolder"></div>
+                                <div class="text-danger fw-bolder">{{ $message }}</div>
                             @enderror
                         </div>
 
@@ -61,7 +61,7 @@
                             <input type="password" name='password' id="form3Example4" class="form-control form-control-lg"
                                 placeholder="Enter password" />
                             @error('password')
-                                <div class="text-danger fw-bolder"></div>
+                                <div class="text-danger fw-bolder">{{ $message }}</div>
                             @enderror
                         </div>
 

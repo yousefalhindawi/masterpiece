@@ -50,17 +50,23 @@
                                 </div>
                                 <div class="bottom-area d-flex px-3">
                                     <div class="m-auto d-flex">
-                                        <a href="#"
+                                        <a href="{{ route('products.show', $product->id) }}"
                                             class="add-to-cart d-flex justify-content-center align-items-center text-center">
-                                            <span><i class="ion-ios-menu"></i></span>
+                                            <span><i class="ion-ios-eye"></i></span>
                                         </a>
-                                        <a href="#"
-                                            class="buy-now d-flex justify-content-center align-items-center mx-1">
-                                            <span><i class="ion-ios-cart"></i></span>
-                                        </a>
-                                        <a href="#" class="heart d-flex justify-content-center align-items-center ">
+                                        <form action="{{ route('carts.store')}}" method="post">
+                                            @csrf
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}"/>
+                                            <input type="hidden" name="quantity" value="1" />
+                                            <input type="hidden" name="product_price" value="{{ $product->sale_status_id === 1 ? $product->product_price_on_sale : $product->product_price }}"/>
+                                            <button type="submit"
+                                                class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                                <span><i class="ion-ios-cart"></i></span>
+                                            </button>
+                                        </form>
+                                        {{-- <a href="#" class="heart d-flex justify-content-center align-items-center ">
                                             <span><i class="ion-ios-heart"></i></span>
-                                        </a>
+                                        </a> --}}
                                     </div>
                                 </div>
                             </div>
