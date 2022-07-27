@@ -28,7 +28,7 @@
             </div>
             <div class="row">
                 @foreach ($products as $product)
-                    <div class="col-md-6 col-lg-3 ftco-animate">
+                    <div id="{{$product->id}}" class="col-md-6 col-lg-3 ftco-animate">
                         <div class="product">
                             <a href="{{ route('products.show', $product->id) }}" class="img-prod"><img class="img-fluid" style="height:300px"
                                     src="{{ asset('storage/'.(str_replace('\\', '/', ($product->product_img)))) }}" alt="Colorlib Template">
