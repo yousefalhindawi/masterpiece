@@ -113,34 +113,36 @@
                     </div>
                     <p><a href="checkout.html" class="btn btn-primary py-3 px-4">Estimate</a></p>
                 </div> --}}
-                <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
-                    {{-- <div class="cart-total mb-3">
+                <div class="col-lg-5 mt-5 cart-wrap ftco-animate">
+                    <div class="cart-total mb-3">
                         <h3>Cart Totals</h3>
                         <p class="d-flex">
                             <span>Subtotal</span>
-                            <span>{{ $total_total }}JD</span>
+                            <span>{{ $subtotal }}JD</span>
                         </p>
+                        @foreach ($cartItems as $cart)
                         <p class="d-flex">
-                            <span>Delivery</span>
-                            <span>1.00JD</span>
+                            <span>{{ $cart->product_name }}  X{{ $cart->quantity }} kilo</span>
+                            <span>{{ $cart->sub_total }}JD</span>
                         </p>
-                        <p class="d-flex">
+                    @endforeach
+                        {{-- <p class="d-flex">
                             <span>Discount</span>
                             <span>$3.00</span>
-                        </p>
+                        </p> --}}
                         <hr>
                         <p class="d-flex total-price">
                             <span>Total</span>
-                            <span>$17.60</span>
+                            <span>{{ $subtotal }}JD</span>
                         </p>
-                    </div> --}}
+                    </div>
                     <p><a href="{{ route('carts.checkout') }}" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
+    {{-- <section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
         <div class="container py-4">
             <div class="row d-flex justify-content-center py-5">
                 <div class="col-md-6">
@@ -157,6 +159,6 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
 @endsection

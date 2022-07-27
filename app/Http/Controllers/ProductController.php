@@ -47,7 +47,8 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         //GET
-        return view('product-single', compact('product'));
+        $relatedProducts = Product::where('category_id', $product->category_id)->limit(4)->get();
+        return view('product-single', compact('product','relatedProducts'));
     }
 
     /**

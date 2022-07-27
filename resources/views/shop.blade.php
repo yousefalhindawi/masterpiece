@@ -16,10 +16,11 @@
             <div class="row justify-content-center">
                 <div class="col-md-10 mb-5 text-center">
                     <ul class="product-category">
-                        <li><a href="{{ route('shops') }}" class="active">All</a></li>
+                        <li><a href="{{ route('shops') }}" class="nav-link {{ Request::is("shops") ? 'active' : '' }}">All</a></li>
                         @foreach ($categories as $category)
                             <li><a href="{{ route('shops.show', $category->id) }}"
-                                    class="nav-link {{ Request::is("/shop/$category->id") ? 'active' : '' }}">{{ $category->category_name }}</a>
+
+                                    class="nav-link {{ Request::is("shops/$category->id") ? 'active' : '' }}">{{ $category->category_name }}</a>
                             </li>
                         @endforeach
                     </ul>
@@ -77,25 +78,15 @@
 
 
         </div>
-        <div class="row mt-5">
-            <div class="col text-center">
-                <div class="block-27">
-                    <ul>
-                        <li><a href="#">&lt;</a></li>
-                        <li class="active"><span>1</span></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">&gt;</a></li>
-                    </ul>
-                </div>
-            </div>
+        <div class="container d-flex justify-content-center">
+            <nav aria-label="Page navigation example" class="mx-auto my-5">
+                {{ $products->links() }}
+            </nav>
         </div>
     </div>
 </section>
 
-<section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
+{{-- <section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
     <div class="container py-4">
         <div class="row d-flex justify-content-center py-5">
             <div class="col-md-6">
@@ -112,6 +103,6 @@
             </div>
         </div>
     </div>
-</section>
+</section> --}}
 
 @endsection

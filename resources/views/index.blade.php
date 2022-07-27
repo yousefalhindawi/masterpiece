@@ -25,7 +25,7 @@
           <div class="col-md-12 ftco-animate text-center">
             <h1 class="mb-2">We serve Fresh Vegestables &amp; Fruits</h1>
             <h2 class="subheading mb-4">We deliver organic vegetables &amp; fruits</h2>
-            <p><a href="#" class="btn btn-primary">View Details</a></p>
+            <p><a href="{{ route('shops') }}" class="btn btn-primary">View Details</a></p>
           </div>
 
         </div>
@@ -40,7 +40,7 @@
           <div class="col-sm-12 ftco-animate text-center">
             <h1 class="mb-2">100% Fresh &amp; Organic Foods</h1>
             <h2 class="subheading mb-4">We deliver organic vegetables &amp; fruits</h2>
-            <p><a href="#" class="btn btn-primary">View Details</a></p>
+            <p><a href="{{ route('shops') }}" class="btn btn-primary">View Details</a></p>
           </div>
 
         </div>
@@ -59,7 +59,7 @@
         </div>
         <div class="media-body">
           <h3 class="heading">Free Shipping</h3>
-          <span>On order over $100</span>
+          <span>On order over 10JD</span>
         </div>
       </div>
     </div>
@@ -216,18 +216,50 @@
           <div class="row justify-content-end">
     <div class="col-md-6 heading-section ftco-animate deal-of-the-day ftco-animate">
         <span class="subheading">Best Price For You</span>
-      <h2 class="mb-4">Deal of the day</h2>
-      <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
-      <h3><a href="#">Spinach</a></h3>
-      <span class="price">$10 <a href="#">now $5 only</a></span>
-      <div id="timer" class="d-flex mt-5">
+      <h2 class="mb-4">Everyday we have Deals</h2>
+      <p>Our fresh Products are always at your fingertips</p>
+      <h3> <button type="button" class="btn btn-success" data-toggle="modal" data-target="#discountModal"  style = " background-color: #82ae46; color :white;">
+        Show Coupon
+      </button></h3>
+
+      {{-- <span class="price">$10 <a href="#">now $5 only</a></span> --}}
+      {{-- <div id="timer" class="d-flex mt-5">
                     <div class="time" id="days"></div>
                     <div class="time pl-3" id="hours"></div>
                     <div class="time pl-3" id="minutes"></div>
                     <div class="time pl-3" id="seconds"></div>
-                  </div>
+                  </div> --}}
     </div>
   </div>
+
+
+  <div class="modal fade" id="discountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body text-center">
+          <div class="icon text-danger">
+            <img src="images/grunge-limited.png" width="50%">
+          </div>
+          <div class="notice">
+            <h4>Get {{ $coupons->percent_off }}% Discount</h4>
+            {{-- <p>For the next 24 hours you can get any product at half-price.</p> --}}
+
+            <p>Use promo code {{ $coupons->percent_off }}%-OFF at checkout.</p>
+          </div>
+          <div class="code" style="font-size: 19px;" >promo code :<span style="color:#82ae46;" >{{ $coupons->code }}</span></div><br><br>
+          @if (Session::has('user') || Session::has('admin'))
+          <span></span>
+          @else
+          <span style="color:brown;" >You Have to <a href="{{ route('login') }}">Login</a> , To benefit from the discount !</span>
+          @endif
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
   </div>
 </section>
 
@@ -235,9 +267,9 @@
     <div class="container">
             <div class="row justify-content-center mb-3 pb-3">
       <div class="col-md-12 heading-section text-center ftco-animate">
-          <span class="subheading">Featured Products</span>
+          <span class="subheading">On Sales Products</span>
         <h2 class="mb-4">Our Products</h2>
-        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
+        <p>Our fresh Products are always at your fingertips</p>
       </div>
     </div>
     </div>
@@ -296,7 +328,7 @@
     </div>
   </section>
 
-<section class="ftco-section testimony-section">
+{{-- <section class="ftco-section testimony-section">
 <div class="container">
   <div class="row justify-content-center mb-5 pb-3">
     <div class="col-md-7 heading-section ftco-animate text-center">
@@ -382,11 +414,12 @@
     </div>
   </div>
 </div>
-</section>
+</section> --}}
 
 <hr>
 
   <section class="ftco-section ftco-partner">
+      <h2 class="text-center mb-5">Our Partners</h2>
   <div class="container">
       <div class="row">
           <div class="col-sm ftco-animate">
@@ -408,7 +441,7 @@
   </div>
 </section>
 
-  <section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
+  {{-- <section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
 <div class="container py-4">
   <div class="row d-flex justify-content-center py-5">
     <div class="col-md-6">
@@ -425,7 +458,7 @@
     </div>
   </div>
 </div>
-</section>
+</section> --}}
 
 
 @endsection

@@ -112,122 +112,54 @@
       </div>
       </div>
       <div class="container">
-          <div class="row">
-              <div class="col-md-6 col-lg-3 ftco-animate">
-                  <div class="product">
-                      <a href="#" class="img-prod"><img class="img-fluid" src="{{ asset('images/product-1.jpg') }}" alt="Colorlib Template">
-                          <span class="status">30%</span>
-                          <div class="overlay"></div>
-                      </a>
-                      <div class="text py-3 pb-4 px-3 text-center">
-                          <h3><a href="#">Bell Pepper</a></h3>
-                          <div class="d-flex">
-                              <div class="pricing">
-                                  <p class="price"><span class="mr-2 price-dc">$120.00</span><span class="price-sale">$80.00</span></p>
-                              </div>
-                          </div>
-                          <div class="bottom-area d-flex px-3">
-                              <div class="m-auto d-flex">
-                                  <a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-                                      <span><i class="ion-ios-menu"></i></span>
-                                  </a>
-                                  <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-                                      <span><i class="ion-ios-cart"></i></span>
-                                  </a>
-                                  <a href="#" class="heart d-flex justify-content-center align-items-center ">
-                                      <span><i class="ion-ios-heart"></i></span>
-                                  </a>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-md-6 col-lg-3 ftco-animate">
-                  <div class="product">
-                      <a href="#" class="img-prod"><img class="img-fluid" src="{{ asset('images/product-2.jpg') }}" alt="Colorlib Template">
-                          <div class="overlay"></div>
-                      </a>
-                      <div class="text py-3 pb-4 px-3 text-center">
-                          <h3><a href="#">Strawberry</a></h3>
-                          <div class="d-flex">
-                              <div class="pricing">
-                                  <p class="price"><span>$120.00</span></p>
-                              </div>
-                          </div>
-                          <div class="bottom-area d-flex px-3">
-                              <div class="m-auto d-flex">
-                                  <a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-                                      <span><i class="ion-ios-menu"></i></span>
-                                  </a>
-                                  <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-                                      <span><i class="ion-ios-cart"></i></span>
-                                  </a>
-                                  <a href="#" class="heart d-flex justify-content-center align-items-center ">
-                                      <span><i class="ion-ios-heart"></i></span>
-                                  </a>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-md-6 col-lg-3 ftco-animate">
-                  <div class="product">
-                      <a href="#" class="img-prod"><img class="img-fluid" src="{{ asset('images/product-3.jpg') }}" alt="Colorlib Template">
-                          <div class="overlay"></div>
-                      </a>
-                      <div class="text py-3 pb-4 px-3 text-center">
-                          <h3><a href="#">Green Beans</a></h3>
-                          <div class="d-flex">
-                              <div class="pricing">
-                                  <p class="price"><span>$120.00</span></p>
-                              </div>
-                          </div>
-                          <div class="bottom-area d-flex px-3">
-                              <div class="m-auto d-flex">
-                                  <a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-                                      <span><i class="ion-ios-menu"></i></span>
-                                  </a>
-                                  <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-                                      <span><i class="ion-ios-cart"></i></span>
-                                  </a>
-                                  <a href="#" class="heart d-flex justify-content-center align-items-center ">
-                                      <span><i class="ion-ios-heart"></i></span>
-                                  </a>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-md-6 col-lg-3 ftco-animate">
-                  <div class="product">
-                      <a href="#" class="img-prod"><img class="img-fluid" src="{{ asset('images/product-4.jpg') }}" alt="Colorlib Template">
-                          <div class="overlay"></div>
-                      </a>
-                      <div class="text py-3 pb-4 px-3 text-center">
-                          <h3><a href="#">Purple Cabbage</a></h3>
-                          <div class="d-flex">
-                              <div class="pricing">
-                                  <p class="price"><span>$120.00</span></p>
-                              </div>
-                          </div>
-                          <div class="bottom-area d-flex px-3">
-                              <div class="m-auto d-flex">
-                                  <a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-                                      <span><i class="ion-ios-menu"></i></span>
-                                  </a>
-                                  <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-                                      <span><i class="ion-ios-cart"></i></span>
-                                  </a>
-                                  <a href="#" class="heart d-flex justify-content-center align-items-center ">
-                                      <span><i class="ion-ios-heart"></i></span>
-                                  </a>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
+        <div class="row">
+            @foreach ($relatedProducts as $product)
+                <div class="col-md-6 col-lg-3 ftco-animate">
+                    <div class="product">
+                        <a href="{{ route('products.show', $product->id) }}" class="img-prod"><img class="img-fluid" style="height:300px"
+                                src="{{ asset('storage/'.(str_replace('\\', '/', ($product->product_img)))) }}" alt="Colorlib Template">
+                                @if ($product->sale_status_id === 1)
+                                <span class="status">{{ round(((($product->product_price-$product->product_price_on_sale)/$product->product_price)*100),2) }}%</span>
+                                @endif
+                            <div class="overlay"></div>
+                        </a>
+                        <div class="text py-3 pb-4 px-3 text-center">
+                            <h3><a href="#">{{ $product->product_name }}</a></h3>
+                            {{-- <p><a href="#">{{ str_replace('<p>', '',substr(($product->product_description),0,30) )}}</a></p> --}}
+                            <div class="d-flex">
+                                <div class="pricing">
+                                    <p class="price"><span class="mr-2 @if ($product->sale_status_id === 1) price-dc @endif">{{ $product->product_price }}JD/kilo</span>
+                                        @if ($product->sale_status_id === 1)
+                                        <span class="price-sale">{{ $product->product_price_on_sale }}JD/kilo</span>
+                                    </p>
+                                        @endif
+                                </div>
+                            </div>
+                            <div class="bottom-area d-flex px-3">
+                                <div class="m-auto d-flex">
+                                    <a href="{{ route('products.show', $product->id) }}"
+                                        class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                        <span><i class="ion-ios-eye"></i></span>
+                                    </a>
+                                    <form action="{{ route('carts.store')}}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}"/>
+                                        <input type="hidden" name="quantity" value="1" />
+                                        <input type="hidden" name="product_price" value="{{ $product->sale_status_id === 1 ? $product->product_price_on_sale : $product->product_price }}"/>
+                                        <button type="submit"
+                                            class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                            <span><i class="ion-ios-cart"></i></span>
+                                        </button>
+                                    </form>
+                                    {{-- <a href="#" class="heart d-flex justify-content-center align-items-center ">
+                                        <span><i class="ion-ios-heart"></i></span>
+                                    </a> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
   </section>
 
       <section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">

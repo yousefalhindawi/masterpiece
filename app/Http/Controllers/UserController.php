@@ -168,6 +168,7 @@ class UserController extends Controller
             ]);
 
             $userInfo = User::where('email', $formFields['email'])->first();
+            // dd($userInfo);
             if (!$userInfo) {
                 return back()->withFailure(__("We don't recognize your email address."));
             } else {
@@ -180,6 +181,8 @@ class UserController extends Controller
                     //     $request->session()->put('admin', $userInfo);
                     //     return redirect()->route('dashboard');
                     // }
+                }else {
+                    return back()->withFailure(__("We don't recognize your Credentials."));
                 }
             }
         } catch (ModelNotFoundException $exception) {

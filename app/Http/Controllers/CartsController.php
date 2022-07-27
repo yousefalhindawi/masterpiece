@@ -25,7 +25,8 @@ class CartsController extends Controller
             if (Session::has('user')) {
             $cartItems = Carts::orderBy('carts.id', 'ASC')->where('user_id', Session::get('user')->id)->join('users', 'carts.user_id', '=', 'users.id')->join('products', 'carts.product_id', '=', 'products.id')->get(['carts.id','carts.sub_total', 'carts.quantity', 'products.product_img', 'products.product_name','products.sale_status_id','products.product_price_on_sale','products.product_price','products.product_price']);
             // dd($cartItems);
-            return view('cart', compact('cartItems'));
+            $subtotal = Carts::where('user_id', Session::get('user')->id)->pluck('sub_total')->sum();
+            return view('cart', compact('cartItems','subtotal'));
         } else {
             return redirect()->route('login')->withFailure(__('You must login to see this page'));
         }
@@ -208,7 +209,7 @@ public function placeOrder(Request $request){
 public function myOrders(){
     $user = User::where('id', Session::get('user')->id)->first();
     // dd($user);
-    $orders = Order::orderBy('orders.id', 'DESC')->where('user_id', Session::get('user')->id)->join('users', 'orders.user_id', '=', 'users.id')->join('products', 'orders.product_id', '=', 'products.id')->get(['orders.id','orders.product_sub_total','orders.order_total_price', 'orders.product_quantity','orders.address', 'orders.phone','orders.created_at', 'products.product_name',]);
+    $orders = Order::orderBy('orders.id', 'DESC')->groupBy('orders.created_at')->where('user_id', Session::get('user')->id)->join('users', 'orders.user_id', '=', 'users.id')->join('products', 'orders.product_id', '=', 'products.id')->get(['orders.id','orders.product_sub_total','orders.order_total_price', 'orders.product_quantity','orders.address', 'orders.phone','orders.created_at', 'products.product_name',]);
     // $orders =  Order::orderBy('orders.id', 'DESC')->where('user_id', Session::get('user')->id)->join('users', 'orders.user_id', '=', 'users.id')->join('products', 'orders.product_id', '=', 'products.id')->get(['orders.id','orders.order_total_amount', 'orders.product_quantity','orders.address', 'orders.phone', 'orders.created_at', 'products.product_name',]);
     // dd($orders);
     return view('profile', compact('user','orders'));

@@ -1,11 +1,13 @@
 <?php
 
 use App\Models\Carts;
+use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\Category;
 use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartsController;
@@ -31,8 +33,9 @@ view()->composer(['layouts.nav'], function ($view) {
 Route::get('/', function () {
     $featureProducts = Product::where('product_feature_id', 1)->where('sale_status_id', 2)->limit(8)->get();
     $categories = Category::all();
+    $coupons = Coupon::first();
     $onsalesProducts = Product::where('sale_status_id',1)->limit(8)->get();
-    return view('index', compact('onsalesProducts','featureProducts','categories'));
+    return view('index', compact('onsalesProducts','featureProducts','categories','coupons'));
 })->name('home');
 
 Route::get('/shops', [ShopController::class, 'index'])->name('shops');
@@ -88,6 +91,7 @@ Route::group(['middleware'=>['user']],function(){
 });
 
 
+Route::post('/sendEmail', [MailController::class, 'sendEmail'])->name('sendEmail');
 
 
 // 404 Page
