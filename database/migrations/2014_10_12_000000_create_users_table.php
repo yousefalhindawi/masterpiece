@@ -21,8 +21,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('phone')->unique();
-            $table->string('address');
+            $table->string('phone')->unique()->nullable();
+            $table->string('address')->nullable();
             // $table->tinyInteger('role')->default(0);
             $table->string('user_img')->default('avatar.png');
             $table->rememberToken();
@@ -38,7 +38,7 @@ class CreateUsersTable extends Migration
                 'password'=>'$2y$10$gEVARivMMlIe4JdPWd.a1OudTk35nxRMbIWo8LpxSISZVQ86J0N5C',//Yousef@123
                 'address'=>'Irbid',
                 'user_img'=>'avatar.png',
-                
+
         ));
     }
 
